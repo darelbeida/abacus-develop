@@ -10,4 +10,5 @@ jobs:
         run: git config --global http.sslverify false && git config --global https.sslverify false
       - name: Download source codes
         uses: actions/checkout@v2
-      - run: ls -l
+      - name: Build
+        run: cd ABACUS.develop/source && make fp_mpi
