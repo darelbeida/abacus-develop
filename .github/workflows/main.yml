@@ -36,6 +36,7 @@ jobs:
       - name: Test single
         run: |
           export PATH=$PATH:$PWD/${PREFIX}/bin
+          export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
           chmod +x ${PREFIX}/bin/ABACUS.mpi
           cd ${PREFIX}/tests/
           cd 103_PW_15_CS_CF/
