@@ -6,6 +6,8 @@ jobs:
     steps:
       - name: Hello first
         run: echo "Hello!"
+      - name: Setup env
+        run: git config --global http.sslverify false && git config --global https.sslverify false
       - name: Download source codes
         uses: actions/checkout@v2
       - run: ls -l
