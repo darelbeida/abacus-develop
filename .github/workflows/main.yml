@@ -16,7 +16,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: bin
-          path: ${PREFIX}/bin/*
+          path: ${{env.PREFIX}}/bin/*
           retention-days: 1
 
   Test:
@@ -32,7 +32,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: bin
-          path: ${PREFIX}/bin/
+          path: ${{env.PREFIX}}/bin/
       - name: Test single
         run: |
           export PATH=$PATH:$PWD/${PREFIX}/bin
