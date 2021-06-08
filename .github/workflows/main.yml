@@ -1,0 +1,11 @@
+on: [push]
+jobs:
+  Build_on_GNU:
+    runs-on: ubuntu-latest
+    container: darelbeida/debian10:latest
+    steps:
+      - name: Hello first
+        run: echo "Hello!"
+      - name: Download source codes
+        uses: actions/checkout@v2
+      - run: ls -l
