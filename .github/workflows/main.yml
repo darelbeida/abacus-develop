@@ -1,4 +1,6 @@
 on: [push]
+env:
+  PREFIX: ABACUS.develop
 jobs:
   Build_on_GNU:
     runs-on: ubuntu-latest
@@ -9,12 +11,13 @@ jobs:
       - name: Download source codes
         uses: actions/checkout@v2
       - name: Build
-        run: cd ABACUS.develop/source && make fp_mpi
+        run: cd ${PREFIX}/source && make fp_mpi
       - name: Artifacts bins
         uses: actions/upload-artifact@v2
         with:
           name: bin
-          path: ABACUS.develop/bin/*
+          path: ${PREFIX}/bin/*
+          retention-days: 1
 
   Test:
     runs-on: ubuntu-latest
@@ -29,9 +32,10 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: bin
+          path: ${PREFIX}/bin/
       - name: Test single
         run: |
-          export PATH=$PATH:ABACUS.develop/bin
-          cd ABACUS.develop/tests/
+          export PATH=$PATH:$PWD/${PREFIX}/bin
+          cd ${PREFIX}/tests/
           cd 103_PW_15_CS_CF/
           ABACUS.mpi
