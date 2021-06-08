@@ -4,11 +4,34 @@ jobs:
     runs-on: ubuntu-latest
     container: darelbeida/debian10:latest
     steps:
-      - name: Hello first
-        run: echo "Hello!"
       - name: Setup env
         run: git config --global http.sslverify false && git config --global https.sslverify false
       - name: Download source codes
         uses: actions/checkout@v2
       - name: Build
         run: cd ABACUS.develop/source && make fp_mpi
+      - name: Artifacts bins
+        uses: actions/upload-artifact@v2
+        with:
+          name: bin
+          path: ABACUS.develop/bin/*
+
+  Test:
+    runs-on: ubuntu-latest
+    container: darelbeida/debian10:latest
+    needs: Build_on_GNU
+    steps:
+      - name: Setup env
+        run: git config --global http.sslverify false && git config --global https.sslverify false
+      - name: Download source codes
+        uses: actions/checkout@v2
+      - name: Reload bins
+        uses: actions/download-artifact@v2
+        with:
+          name: bin
+      - name: Test single
+        run: |
+          export PATH=$PATH:ABACUS.develop/bin
+          cd ABACUS.develop/tests/
+          cd 103_PW_15_CS_CF/
+          ABACUS.mpi
