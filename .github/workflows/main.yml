@@ -17,6 +17,8 @@ jobs:
         with:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ghcr.io/darelbeida/abacus_debian10_gnu:latest
+          cache-from: type=registry,ref=ghcr.io/darelbeida/abacus_debian10_gnu:latest
+          cache-to: type=inline
 
   build_on_gnu:
     runs-on: ubuntu-latest
