@@ -19,7 +19,6 @@ jobs:
           tags: ghcr.io/darelbeida/abacus_debian10_gnu:latest
           cache-from: type=registry,ref=ghcr.io/darelbeida/abacus_debian10_gnu:latest
           cache-to: type=inline
-
   build_on_gnu:
     runs-on: ubuntu-latest
     container: ghcr.io/darelbeida/abacus_debian10_gnu:latest
