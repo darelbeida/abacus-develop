@@ -2,12 +2,29 @@ on: [push, pull_request]
 env:
   PREFIX: ABACUS.develop
 jobs:
-  Build_on_GNU:
+  build_dockerfile:
     runs-on: ubuntu-latest
-    container: darelbeida/debian10:latest
     steps:
-      - name: Setup env
-        run: git config --global http.sslverify false && git config --global https.sslverify false
+      - name: Download source codes
+        uses: actions/checkout@v2
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: darelbeida/abacus_debian10_gnu:latest
+
+  build_on_gnu:
+    runs-on: ubuntu-latest
+    container: ghcr.io/darelbeida/abacus_debian10_gnu:latest
+    needs: build_dockerfile
+    steps:
       - name: Download source codes
         uses: actions/checkout@v2
       - name: Build
@@ -19,13 +36,11 @@ jobs:
           path: ${{env.PREFIX}}/bin/*
           retention-days: 1
 
-  Test:
+  test:
     runs-on: ubuntu-latest
-    container: darelbeida/debian10:latest
-    needs: Build_on_GNU
+    container: ghcr.io/darelbeida/abacus_debian10_gnu:latest
+    needs: build_on_gnu
     steps:
-      - name: Setup env
-        run: git config --global http.sslverify false && git config --global https.sslverify false
       - name: Download source codes
         uses: actions/checkout@v2
       - name: Reload bins
