@@ -2,10 +2,16 @@ FROM debian:buster-slim
 
 LABEL org.opencontainers.image.source https://github.com/darelbeida/abacus-develop
 
-RUN apt-get update && apt-get install -y --no-install-recommends git gfortran libboost-dev make ssh vim wget \
+RUN apt-get update && apt-get install -y --no-install-recommends git gfortran libboost-dev libssl-dev make ssh vim wget \
     && apt-get install -y --no-install-recommends mpich libmpich-dev
 
 ENV GIT_SSL_NO_VERIFY 1
+
+RUN cd /tmp \
+    && wget https://cmake.org/files/v3.18/cmake-3.18.4.tar.gz \
+    && tar xf cmake-3.18.4.tar.gz cmake-3.18.4/ && cd cmake-3.18.4 \
+    && ./configure && make -j8 && make install \
+    && cd /tmp && rm -rf cmake-3.18.4
 
 RUN cd /tmp \
     && git clone https://github.com/xianyi/OpenBLAS.git --single-branch --depth=1 \
