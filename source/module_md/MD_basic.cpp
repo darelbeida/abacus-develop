@@ -330,7 +330,7 @@ void MD_basic::runNVE(int step1){
     double twiceKE=mdf.GetAtomKE(ucell.nat, vel, allmass);
     twiceKE = twiceKE * 2;
 
-    double tempNow = twiceKE/(3*double(ucell.nat-nfrozen_))/K_BOLTZMAN_AU;
+    double tempNow = twiceKE/(3*double(ucell.nat-nfrozen_));
     cout<<" start temperature = "<< tempNow/K_BOLTZMAN_AU<< " (k)"<<endl;
 
     // Set up forces
@@ -482,7 +482,7 @@ bool MD_basic::runFIRE(int step1){
     double twiceKE=mdf.GetAtomKE(ucell.nat, vel, allmass);
     twiceKE = twiceKE * 2;
 
-    double tempNow = twiceKE/(3*double(ucell.nat-nfrozen_))/K_BOLTZMAN_AU;
+    double tempNow = twiceKE/(3*double(ucell.nat-nfrozen_));
     cout<<" start temperature = "<< tempNow/K_BOLTZMAN_AU<< " (k)"<<endl;
 
     // Set up forces
