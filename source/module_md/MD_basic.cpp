@@ -183,6 +183,14 @@ void MD_basic::runNVT(int step1, double potential, ModuleBase::Vector3<double> *
 
 	if (!GlobalV::MY_RANK)
     {
+	ModuleBase::GlobalFunc::NEW_PART("VELOCITY");
+	for(int k=0;k<ucell.nat;k++){
+	    GlobalV::ofs_running << std::left
+		<< std::setw(15) << std::setiosflags(ios::fixed) << std::setprecision(6) << vel[k].x
+		<< std::setw(15) << std::setiosflags(ios::fixed) << std::setprecision(6) << vel[k].y
+		<< std::setw(15) << std::setiosflags(ios::fixed) << std::setprecision(6) << vel[k].z
+		<< std::endl;
+	}
         GlobalV::ofs_running<<"\n --------------------------------------------------"<<std::endl;
         GlobalV::ofs_running<<" Molecular Dynamics (NVT) STEP "<< unsigned(step_) <<std::endl;
         GlobalV::ofs_running<< " --------------------------------------------------"<<std::endl;
