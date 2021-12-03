@@ -1,0 +1,7 @@
+64 #nx
+40 #ny
+72 #nz
+130 #K
+1 #randominit
+0.001 #eps
+cg_dump_gpu #foler

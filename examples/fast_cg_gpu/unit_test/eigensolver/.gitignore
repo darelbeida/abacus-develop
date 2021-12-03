@@ -1,0 +1,15 @@
+eigen3/
+sparse_eigen_solver
+*.o
+.vscode/
+*.tar.gz
+*.bz2
+!cg_dump/
+cg_dump/*
+!cg_dump/hamiltonian/
+!cg_dump/phi_in.dat
+fftw-3.3.10
+fft
+fft_backward_*.dat
+debug_sparse_eigen_solver
+sparse_eigen_solver_single
